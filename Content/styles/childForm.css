@@ -1,0 +1,53 @@
+﻿div.child-form-container {
+  margin-top: 60px;
+}
+div.child-form-container .input-clock-icon {
+  position: absolute;
+  padding: 6px 10px;
+  font-size: 14px;
+  line-height: 1;
+  color: #555;
+  text-align: center;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 0 4px 4px 0;
+  border-left: none;
+}
+div.child-form-container .time-input {
+  padding: 2px;
+}
+div.child-form-container .error {
+  color: red;
+  display: block;
+}
+div.child-form-container button.add,
+div.child-form-container button.remove {
+  background-color: transparent;
+  border: none;
+  display: block;
+}
+div.child-form-container button.expand {
+  background-color: #60abcf;
+  border: none;
+  color: white;
+  padding: 10px;
+}
+div.child-form-container button.accordion {
+  background-color: transparent;
+  border: none;
+}
+div.child-form-container .fa-times-circle-o {
+  color: red;
+}
+div.child-form-container .fa-plus-circle {
+  color: green;
+}
+div.child-form-container .time-form {
+  margin-bottom: 15px;
+}
+div.child-form-container .accordion-row {
+  margin-bottom: 20px;
+}
+div.child-form-container a {
+  color: black;
+}

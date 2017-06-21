@@ -1,0 +1,220 @@
+﻿<div class="container child-form-container" ng-controller="sampleController as gc">
+
+    <ng-form name="sc.timeLog" novalidate>
+
+        <div class="row">
+
+            <div class="col-xs-6 col-sm-3">
+                <input type="date"
+                       class="date-input"
+                       name="date"
+                       ng-model="sc.date"
+                       ng-change="sc.dateChanged()"
+                       required />
+            </div>
+
+            <div class="col-xs-6 col-sm-3">
+                <select name="activeChild"
+                        ng-init="sc.activeChild = sc.childRecords[0]"
+                        ng-model="sc.activeChild"
+                        ng-change="sc.addNewTimeInput(false)"
+                        ng-options="child.name for child in sc.childRecords"
+                        required></select>
+            </div>
+
+            <div class="col-xs-6 col-sm-3">
+                <button class="expand" ng-click="sc.expandAll()">Expand All</button>
+            </div>
+
+            <div class="col-xs-6 col-sm-3">
+                <button class="expand" ng-click="sc.collapseAll()">Collapse All</button>
+            </div>
+
+        </div>
+
+        <hr />
+
+        <div class="row">
+            <uib-accordion close-others="false">
+
+                <div class="col-xs-12">
+                    <div class="container-fluid">
+
+                        <div class="row accordion-row">
+                            <div class="col-xs-6">
+
+                                <div uib-accordion-group class="panel-default" is-disabled="true" is-open="sc.accordions[0].open">
+                                    <uib-accordion-heading>
+                                        <a ng-click="sc.getCurrentTime()">{{sc.activeChild.name}} </a> <span class="pull-right">{{sc.activeChildLabel}} <a ng-click="sc.accordions[0].open = !sc.accordions[0].open"><i class="glyphicon" ng-class="{'glyphicon-chevron-down': sc.accordions[0].open, 'glyphicon-chevron-right': !sc.accordions[0].open}"></i></a></span>
+                                    </uib-accordion-heading>
+
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-xs-10">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-xs-6">
+                                                            IN
+                                                        </div>
+                                                        <div class="col-xs-6">
+                                                            OUT
+                                                        </div>
+                                                    </div>
+
+                                                    <div data-ng-repeat="child in sc.childRecords | filter: { name: sc.activeChild.name } track by $index">
+                                                        <ng-form name="sc.timeForms[{{$index}}]" class="row time-form" data-ng-repeat="record in child.records | filter: { date: sc.stringDate } track by $index">
+                                                            <div class="col-xs-6">
+
+                                                                <input type="time"
+                                                                       class="time-input" id="stuff"
+                                                                       name="inTime"
+                                                                       min="{{($index == 0 ? '' : child.records[$index-1].outTime | date: 'HH:mm')}}"
+                                                                       ng-model="record.inTime"
+                                                                       ng-change="sc.addDetails($index, record)"
+                                                                       required />
+
+                                                                <span class="input-clock-icon">
+                                                                    <span class="glyphicon glyphicon-time"></span>
+                                                                </span>
+                                                                <div role="alert">
+                                                                    <span class="error" ng-show="sc.timeForms[{{$index}}].inTime.$error.min">
+                                                                        in time is out of range
+                                                                    </span>
+
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="col-xs-6">
+
+                                                                <input type="time"
+                                                                       class="time-input"
+                                                                       name="outTime"
+                                                                       min="{{child.records[$index].inTime | date: 'HH:mm'}}"
+                                                                       ng-model="record.outTime"
+                                                                       ng-change="sc.addDetails($index, record)"
+                                                                       ng-required="!$last || $index == 0" />
+                                                                <span class="input-clock-icon">
+                                                                    <span class="glyphicon glyphicon-time"></span>
+                                                                </span>
+
+                                                                <div role="alert">
+                                                                    <span class="error" ng-show="sc.timeForms[{{$index}}].outTime.$error.min">
+                                                                        out time is out of range
+                                                                    </span>
+                                                                </div>
+
+                                                            </div>
+                                                        </ng-form>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-2">
+                                                <button class="remove" ng-click="sc.removeTimeInput()"><i class="fa fa-times-circle-o" aria-hidden="true"></i></button>
+                                                <button class="add" ng-click="sc.addNewTimeInput(true)"><i class="fa fa-plus-circle" aria-hidden="true"></i></button>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-xs-6">
+                                <div uib-accordion-group class="panel-default" is-open="sc.accordions[1].open">
+                                    <uib-accordion-heading>
+                                        Age Test <span class="pull-right"><asc.accordions[7].open><i class="glyphicon" ng-class="{'glyphicon-chevron-down': sc.accordions[1].open, 'glyphicon-chevron-right': !sc.accordions[1].open}"></i></span>
+                                    </uib-accordion-heading>
+                                    <p>content</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row accordion-row">
+                            <div class="col-xs-6">
+                                <div uib-accordion-group class="panel-default" is-open="sc.accordions[2].open">
+                                    <uib-accordion-heading>
+                                        Filler Accordion <span class="pull-right"><asc.accordions[7].open><i class="glyphicon" ng-class="{'glyphicon-chevron-down': sc.accordions[2].open, 'glyphicon-chevron-right': !sc.accordions[2].open}"></i></span>
+                                    </uib-accordion-heading>
+
+                                    <p>content</p>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-6">
+                                <div uib-accordion-group class="panel-default" is-open="sc.accordions[3].open">
+                                    <uib-accordion-heading>
+                                        Filler Accordion <span class="pull-right"><asc.accordions[7].open><i class="glyphicon" ng-class="{'glyphicon-chevron-down': sc.accordions[3].open, 'glyphicon-chevron-right': !sc.accordions[3].open}"></i></span>
+                                    </uib-accordion-heading>
+
+                                    <p>content</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row accordion-row">
+                            <div class="col-xs-6">
+                                <div uib-accordion-group class="panel-default" is-open="sc.accordions[4].open">
+                                    <uib-accordion-heading>
+                                        Filler Accordion <span class="pull-right"><asc.accordions[7].open><i class="glyphicon" ng-class="{'glyphicon-chevron-down': sc.accordions[4].open, 'glyphicon-chevron-right': !sc.accordions[4].open}"></i></span>
+                                    </uib-accordion-heading>
+
+                                    <p>content</p>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-6">
+                                <div uib-accordion-group class="panel-default" is-open="sc.accordions[5].open">
+                                    <uib-accordion-heading>
+                                        Filler Accordion <span class="pull-right"><asc.accordions[7].open><i class="glyphicon" ng-class="{'glyphicon-chevron-down': sc.accordions[5].open, 'glyphicon-chevron-right': !sc.accordions[5].open}"></i></span>
+                                    </uib-accordion-heading>
+
+                                    <p>content</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row accordion-row">
+                            <div class="col-xs-6">
+                                <div uib-accordion-group class="panel-default" is-open="sc.accordions[6].open">
+                                    <uib-accordion-heading>
+                                        Filler Accordion <span class="pull-right"><asc.accordions[7].open><i class="glyphicon" ng-class="{'glyphicon-chevron-down': sc.accordions[6].open, 'glyphicon-chevron-right': !sc.accordions[6].open}"></i></span>
+                                    </uib-accordion-heading>
+
+                                    <p>content</p>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-6">
+                                <div uib-accordion-group class="panel-default" is-open="sc.accordions[7].open">
+                                    <uib-accordion-heading>
+                                        Filler Accordion <span class="pull-right"><asc.accordions[7].open><i class="glyphicon" ng-class="{'glyphicon-chevron-down': sc.accordions[7].open, 'glyphicon-chevron-right': !sc.accordions[7].open}"></i></span>
+                                    </uib-accordion-heading>
+
+                                    <p>content</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </uib-accordion>
+        </div>
+
+    </ng-form>
+</div>
+
+
+@section Styles {
+    @Styles.Render("~/Content/styles/childForm.min.css")
+}
+
+@section Scripts {
+    @Scripts.Render("~/Scripts/site/childForm.js")
+}
